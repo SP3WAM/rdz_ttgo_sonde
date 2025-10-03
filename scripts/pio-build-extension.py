@@ -45,7 +45,14 @@ env.AddPostAction("$PROGPATH",
     "xtensa-esp32-elf-ld", "-T", "fontlink.ld", "--oformat=binary", "-o", "$BUILD_DIR/fonts.bin", "$BUILD_DIR/src/src/fonts/fonts.cpp.o" ]),
     "Building $BUILD_DIR/fonts.bin"))
 
-
+# After generating the elf file, generate littlefs.bin as well
+# this is being actually called under the hood when executing 'run pio --target=uploadfs' in terminal
+# "mklittlefs" -c RX_FSK\data -s 851968 -p 256 -b 4096 .pio\build\ttgo-lora32\littlefs.bin
+# The below AddPostAction builds the littlefs.bin but it differs a bit at the first bytes of the file
+# env.AddPostAction("$PROGPATH", 
+#   env.VerboseAction(" ".join([
+#     "mklittlefs", "-c",  "RX_FSK/data", "-s", "0xD0000", "-p", "256", "-b", "4096", "$BUILD_DIR/littlefs.bin" ]),
+#     "Building $BUILD_DIR/littlefs.bin"))
 
 env.AddCustomTarget(
   "uploadfonts",
