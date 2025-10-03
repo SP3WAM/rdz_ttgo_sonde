@@ -346,6 +346,7 @@ void U8x8Display::welcome() {
 	setFont(FONT_SMALL);
 	drawString(0, 4, "RS41/92,DFM,Mx0");
 	drawString(0, 6, "by Hansi, DL9RDZ");
+	drawString(0, 7, "    73 de SP3WAM");
 }
 
 static String previp;
