@@ -17,8 +17,8 @@
 # T-BEAM, ILI9225: SDA=4, CLK=21, RS=2, RST=22, CS=0
 # No specification in config file: try autodetection (gpio4 pin level at startup)
 #
-# disptype: 0=OLED, 1=ILI9225, 3=OLED I2C SSD1309 1.54 inch 128x64
-#disptype=3
+# disptype: 0=OLED, 1=ILI9225
+#disptype=0
 #oled_sda=21
 #oled_scl=22
 #oled_rst=16
