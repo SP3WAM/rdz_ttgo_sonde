@@ -103,8 +103,8 @@ void unkHandler(T nmea) {
 #define AUTO_CHASE_THRESHOLD 0.002
 
 //#define DEBUG_GPS
-static bool gpsCourseOld;
 static int lastCourse;
+static long lastCourseMillis = 0;
 static char lastnmea[101];
 void gpsTask(void *parameter) {
   nmea.setUnknownSentenceHandler(unkHandler);
@@ -142,18 +142,22 @@ void gpsTask(void *parameter) {
           // MicroNMEA library returns 0 when course is either unknown or it is known and points towards north
           // Starting from now I treat the value of 0 as unknown
           gpsPos.course = (int)(nmea.getCourse() / 1000);
-          gpsCourseOld = false;
+          if(millis() - lastCourseMillis > 5000)
+          {
+            // invalidate last course after some specific amount of time
+            lastCourse = 0;
+          }
           if (gpsPos.course == 0) {
             // either north or not known
             if (lastCourse != 0) // use old value...
             {
-              gpsCourseOld = true;
               gpsPos.course = lastCourse;
             }
           }
           else
           {
             lastCourse = gpsPos.course;
+            lastCourseMillis = millis();
           }
           if (gpsPos.lon == 0 && gpsPos.lat == 0) gpsPos.valid = false;
         }
