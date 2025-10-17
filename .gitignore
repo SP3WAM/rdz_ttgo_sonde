@@ -33,3 +33,6 @@
 
 .pio
 .vscode
+
+# CPP file created only during the build time (removed automatically after the build)
+RX_FSK/RX_FSK.ino.cpp
