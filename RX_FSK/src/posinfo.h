@@ -17,6 +17,7 @@ struct StationPos {
         double lon;
         int alt;
         float speed;
+        /* Course: when 0 - unknown, when from 1 to 359 it is a valid clockwise from north */
         int16_t course;
         int16_t accuracy;
         int16_t hdop;

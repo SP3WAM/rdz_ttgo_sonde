@@ -257,11 +257,13 @@ fonts=0,1
 2,6=gO
 3,0=xALT :
 3,9=gH
-4,0=xSonde
-5,0=xAlt :
-5,6=a
-6,0=xDist:
-6,6=gD
+4,0=xCOG :
+4,6=gC
+5,0=xSonde
+6,0=xAlt :
+6,6=a
+7,0=xDist:
+7,6=gD
 
 ###########
 # 

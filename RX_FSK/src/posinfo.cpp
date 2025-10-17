@@ -124,10 +124,10 @@ void gpsTask(void *parameter) {
         }
         if(strncmp(nmeastring+3, "GGA", 3)==0 || strncmp(nmeastring+3, "RMC", 3)==0) {
             strncpy(lastnmea, nmeastring, 100);
-	    //Serial.printf("GPS: last position nmea: %s\n", lastnmea);
+	    Serial.printf("GPS: last position nmea: %s\n", lastnmea);
  	}
  	else  {
-	    //Serial.printf("GPS: last nmea: %s\n", nmeastring);
+	    Serial.printf("GPS: last nmea: %s\n", nmeastring);
 	}
         // TODO: This runs on each valid sentance. We should process position updates
         // only once per second. 
@@ -139,15 +139,21 @@ void gpsTask(void *parameter) {
           long alt = 0;
           nmea.getAltitude(alt);
           gpsPos.alt = (int)(alt / 1000);
+          // MicroNMEA library returns 0 when course is either unknown or it is known and points towards north
+          // Starting from now I treat the value of 0 as unknown
           gpsPos.course = (int)(nmea.getCourse() / 1000);
           gpsCourseOld = false;
           if (gpsPos.course == 0) {
-            // either north or not new
+            // either north or not known
             if (lastCourse != 0) // use old value...
             {
               gpsCourseOld = true;
               gpsPos.course = lastCourse;
             }
+          }
+          else
+          {
+            lastCourse = gpsPos.course;
           }
           if (gpsPos.lon == 0 && gpsPos.lat == 0) gpsPos.valid = false;
         }

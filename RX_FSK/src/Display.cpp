@@ -1562,7 +1562,14 @@ void Display::drawGPS(DispEntry *de) {
 			break;
 		case 'C':
 			// GPS Course over ground
-			snprintf(buf, 4, "%3d", gpsPos.course);
+			if(gpsPos.course == 0)
+			{
+				snprintf(buf, 4, "---", gpsPos.course);
+			}
+			else
+			{
+				snprintf(buf, 4, "%3d", gpsPos.course);
+			}
 			drawString(de, buf);
 			break;
 		case 'S':
