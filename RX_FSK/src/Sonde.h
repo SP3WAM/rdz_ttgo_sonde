@@ -73,8 +73,8 @@ extern const char *RXstr[];
 // 01000000 => goto sonde -1
 // 01000001 => goto sonde +1
 
-#define NSondeTypes 7
-enum SondeType { STYPE_DFM, STYPE_RS41, STYPE_RS92, STYPE_M10M20, STYPE_M10, STYPE_M20, STYPE_MP3H };
+#define NSondeTypes 8
+enum SondeType { STYPE_DFM, STYPE_RS41, STYPE_RS92, STYPE_M10M20, STYPE_M10, STYPE_M20, STYPE_MP3H, STYPE_FAKE };
 extern const char *sondeTypeStr[NSondeTypes];
 extern const char *sondeTypeLongStr[NSondeTypes];
 extern const char sondeTypeChar[NSondeTypes];

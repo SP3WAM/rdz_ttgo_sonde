@@ -14,6 +14,7 @@
 #include "DFM.h"
 #include "M10M20.h"
 #include "MP3H.h"
+#include "FakeSonde.h"
 #include "SX1278FSK.h"
 #include "Display.h"
 #include <Wire.h>
@@ -27,10 +28,10 @@ const char *evstring[]={"NONE", "KEY1S", "KEY1D", "KEY1M", "KEY1L", "KEY2S", "KE
 const char *RXstr[]={"RX_OK", "RX_TIMEOUT", "RX_ERROR", "RX_UNKNOWN"};
 
 // Dependency to enum SondeType
-const char *sondeTypeStr[NSondeTypes] = { "DFM ", "RS41", "RS92", "Mxx ", "M10 ", "M20 ", "MP3H" };
-const char *sondeTypeLongStr[NSondeTypes] = { "DFM (all)", "RS41", "RS92", "M10/M20", "M10 ", "M20 ", "MP3-H1" };
-const char sondeTypeChar[NSondeTypes] = { 'D', '4', 'R', 'M', 'M', '2', '3' };
-const char *manufacturer_string[]={"Graw", "Vaisala", "Vaisala", "Meteomodem", "Meteomodem", "Meteomodem", "Meteo-Radiy"};
+const char *sondeTypeStr[NSondeTypes] = { "DFM ", "RS41", "RS92", "Mxx ", "M10 ", "M20 ", "MP3H", "FAKE" };
+const char *sondeTypeLongStr[NSondeTypes] = { "DFM (all)", "RS41", "RS92", "M10/M20", "M10 ", "M20 ", "MP3-H1", "FAKE" };
+const char sondeTypeChar[NSondeTypes] = { 'D', '4', 'R', 'M', 'M', '2', '3', 'F' };
+const char *manufacturer_string[]={"Graw", "Vaisala", "Vaisala", "Meteomodem", "Meteomodem", "Meteomodem", "Meteo-Radiy", "Fake"};
 // tiny library printf does not support $ parameters, so remove....
 // for now, only urls with the right order of parameters are supported, this maybe will change in the future again.
 //const char *DEFEPH="gssc.esa.int/gnss/data/daily/%1$04d/brdc/brdc%2$03d0.%3$02dn.gz";
@@ -532,6 +533,8 @@ void Sonde::setup() {
 	case STYPE_MP3H:
 		mp3h.setup( sondeList[rxtask.currentSonde].freq * 1000000);
 		break;
+	case STYPE_FAKE:
+	    fakeSonde.setup( sondeList[rxtask.currentSonde].freq * 1000000);
 	}
 	// debug
 	int freq = (int)sx1278.getFrequency();
@@ -573,6 +576,9 @@ void Sonde::receive() {
 		break;
 	case STYPE_MP3H:
 		res = mp3h.receive();
+		break;
+	case STYPE_FAKE:
+		res = fakeSonde.receive();
 		break;
 	}
 

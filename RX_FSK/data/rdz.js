@@ -4,6 +4,7 @@ stypes.set('R', 'RS92');
 stypes.set('D', 'DFM');
 stypes.set('M', 'M10/M20');
 stypes.set('3', 'MP3H');
+stypes.set('F', 'FAKE');
 
 function loadaprs(baseurl,callback) {
   var link = document.createElement('link');

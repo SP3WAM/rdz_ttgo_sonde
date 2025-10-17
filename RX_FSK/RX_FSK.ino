@@ -117,8 +117,8 @@ boolean connected = false;
 WiFiUDP udp;
 WiFiClient client;
 
-/* Sonde.h: enum SondeType { STYPE_DFM,, STYPE_RS41, STYPE_RS92, STYPE_M10M20, STYPE_M10, STYPE_M20, STYPE_MP3H }; */
-const char *sondeTypeStrSH[NSondeTypes] = { "DFM", "RS41", "RS92", "Mxx"/*never sent*/, "M10", "M20", "MRZ" };
+/* Sonde.h: enum SondeType { STYPE_DFM, STYPE_RS41, STYPE_RS92, STYPE_M10M20, STYPE_M10, STYPE_M20, STYPE_MP3H, STYPE_FAKE }; */
+const char *sondeTypeStrSH[NSondeTypes] = { "DFM", "RS41", "RS92", "Mxx"/*never sent*/, "M10", "M20", "MRZ", "FAKE" };
 
 
 // moved to connSondehub.cpp
@@ -331,6 +331,9 @@ void setupChannelList() {
     }
     else if (space[1] == '3') {
       type = STYPE_MP3H;
+    }
+    else if (space[1] == 'F') {
+      type = STYPE_FAKE;
     }
     else continue;
     int active = space[3] == '+' ? 1 : 0;
