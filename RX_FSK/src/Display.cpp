@@ -1511,7 +1511,7 @@ void Display::calcGPS() {
 	} else {
 		gpsDist = -1;
 	}
-	// bearing
+	// true bearing and relative bearing
 	if( valid && VALIDPOS(sonde.si()->d.validPos&0x03) && (layout->usegps&GPSUSE_BEARING)) {
 		float lat1 = radians(mylat);
 		float lat2 = radians(sonde.si()->d.lat);
@@ -1522,9 +1522,18 @@ void Display::calcGPS() {
 		float dir = atan2(y, x)/PI*180;
 		if(dir<0) dir+=360;
 		gpsDir = (int)dir;
-		gpsBear = gpsDir - gpsPos.course;
-		if(gpsBear < 0) gpsBear += 360;
-		if(gpsBear >= 360) gpsBear -= 360;
+
+		if(gpsPos.course == 0)
+		{
+			// meaning station's COG is invalid so can't calculate the relative bearing
+			gpsBear = -1;
+		}
+		else
+		{
+			gpsBear = gpsDir - gpsPos.course;
+			if(gpsBear < 0) gpsBear += 360;
+			if(gpsBear >= 360) gpsBear -= 360;
+		}
 	} else {
 		gpsDir = -1;
 		gpsBear = -1;
@@ -1561,7 +1570,7 @@ void Display::drawGPS(DispEntry *de) {
 			drawString(de,buf);
 			break;
 		case 'C':
-			// GPS Course over ground
+			// Station's GPS Course over ground
 			if(gpsPos.course == 0)
 			{
 				snprintf(buf, 4, "---", gpsPos.course);
@@ -1626,7 +1635,7 @@ void Display::drawGPS(DispEntry *de) {
 				rdis->drawTile(de->x+3, de->y, 1, deg_tile);
 			break;
 		case 'B':
-			// relative bearing
+			// relative bearing from the station to the sonde
 			if( disp.gpsBear < 0 ) {  // 0..360 valid, -1 invalid
 				drawString(de, "---");
 				break;
