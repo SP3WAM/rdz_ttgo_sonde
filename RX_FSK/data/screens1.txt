@@ -291,3 +291,19 @@ timeaction=#,D,+
 7,0=gV
 7,5=n
 
+#############
+@Compass
+timer=-1,-1,-1
+key1action=+,0,F,W
+key2action=>,#,#,#
+timeaction=#,#,#
+fonts=0,1
+0,0=xCompass
+1,0=gV
+1,2=xd=
+1,4=gD
+2,0=xTB=
+2,3=gI°
+2,9=xRB=
+2,12=gB
+0,0=g0CCS,20,FFFF00,000033,10,9ACD32,6,EEAA00

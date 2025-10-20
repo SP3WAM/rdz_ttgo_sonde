@@ -37,6 +37,11 @@ struct StatInfo {
 	uint8_t size;
 };
 
+/* 
+ * g[0][top][bul][arr][radius][fgcol][bgcol][awidth][acol][brad][bcol]
+ * Example:
+ * g0NCS,50,ff0000,000033,5,ffff00,4,ffffff
+ */
 struct CircleInfo {  // 3,5=g0NCS,50,ff0000,000033,5,ffff00,4,ffffff
 	char type;
 	char top,bul,arr; // what to point to with top, bullet, array
